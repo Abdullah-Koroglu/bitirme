@@ -3,10 +3,12 @@ import React , {useState, createContext} from "react";
 export const StateContext = createContext ();
 
 export const StateProvider = ({children}) => {
-  const [state, setState] = useState ();
+  const [eventId, setEventId] = useState ();
+  const [howtoId, setHowtoId] = useState ();
+  const [routes, setRoutes] = useState ();
 
   return (
-    <StateContext.Provider value={[state, setState]}>
+    <StateContext.Provider value={[setEventId, eventId, setHowtoId, howtoId, setRoutes, routes]}>
       {children}
     </StateContext.Provider>
   )
