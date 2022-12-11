@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useEffect, useContext} from 'react';
 import { StateContext } from "../context/StateContext";
-import { Button, View, Text } from 'react-native';
+import { Button, View, Text, Platform } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -20,15 +20,33 @@ import MailScreen from '../pages/Mail';
 import LinksScreen from '../pages/Links';
 import ReportScreen from '../pages/Report';
 import { useNotifications } from '../hooks/useNotifications';
+import { NativeModules } from 'react-native'
+import { useState } from 'react';
+import locales from '../locale'
 
 const Drawer = createDrawerNavigator ();
 const Stack = createNativeStackNavigator();
 
+const handleLocale = (locale) => {
+  if (locale === 'tr_TR' || locale === 'en_US') {
+    return locale
+  } else {
+    return 'en_US'
+  }
+}
+
 export default function App () {
-  const [,,,,setRoutes] = useContext (StateContext)
+  const [,,,,setRoutes,,setLocale] = useContext (StateContext)
   const { registerForPushNotificationsAsync, handleNotificationResponse } = useNotifications ()
+  const locale = Platform.OS === 'android' ?
+  NativeModules.I18nManager.localeIdentifier :
+  NativeModules.SettingsManager.settings.AppleLocale || NativeModules.SettingsManager.settings.AppleLanguages[0]
+
+  const [localeInUse, setLocaleInUse] = useState (locales[handleLocale(locale)]) // handle the non-tr,en locales
 
   useEffect  (() => {
+   setLocale (locale)
+
     registerForPushNotificationsAsync ()
     Notifications.setNotificationHandler({
       handleNotification: async () => ({
@@ -67,16 +85,16 @@ export default function App () {
           useEffect  (() => {
             setRoutes (props.state.routeNames)
           }, [])
-  }</CustomDrawer>} initialRouteName="Ana Sayfa">
-        <Drawer.Screen name="Ana Sayfa" component={HomeScreen} />
-        <Drawer.Screen name="Nasıl Yaparım" component={HowtoStack} />
-        <Drawer.Screen name="Sanal Tur" component={TourScreen} />
-        <Drawer.Screen name="Etkinlikler" component={EventStack} />
-        <Drawer.Screen name="Resmi E-posta" component={MailScreen} />
-        <Drawer.Screen name="Telefon Rehberi" component={DirectoryScreen} />
-        <Drawer.Screen name="Öneri ve Şikayet" component={ReportScreen} />
-        <Drawer.Screen name="Ulaşım" component={TransportationScreen} />
-        <Drawer.Screen name="Linkler" component={LinksScreen} />
+  }</CustomDrawer>} initialRouteName={localeInUse.homepage}>
+        <Drawer.Screen name={localeInUse.homepage} component={HomeScreen} />
+        <Drawer.Screen name={localeInUse.howto} component={HowtoStack} />
+        <Drawer.Screen name={localeInUse.virtual_tour} component={TourScreen} />
+        <Drawer.Screen name={localeInUse.events} component={EventStack} />
+        <Drawer.Screen name={localeInUse.email} component={MailScreen} />
+        <Drawer.Screen name={localeInUse.directory} component={DirectoryScreen} />
+        <Drawer.Screen name={localeInUse.report} component={ReportScreen} />
+        <Drawer.Screen name={localeInUse.transportation} component={TransportationScreen} />
+        <Drawer.Screen name={localeInUse.links} component={LinksScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

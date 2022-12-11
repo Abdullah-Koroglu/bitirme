@@ -6,12 +6,14 @@ import moment from "moment";
 import { StateContext } from "../../context/StateContext";
 import 'moment/locale/tr'
 import { debounce } from "lodash";
+import locales from '../../locale'
 
 export default function HowtosScreen({ navigation }) {
   const [records, setRecords] = useState(null)
   const [searchText, setSearchText] = useState(null)
   const [searchResult, setSearchResult] = useState(null)
-  const [,,setHowtoId] = useContext (StateContext)
+  const [,,setHowtoId,,,,,locale] = useContext (StateContext)
+  const [localeInUse, setLocaleInUse] = useState(locales[locale])
   const getRecords = async () => {
     try {
       const response = await axios.get('/how-tos?pagination[page]=1&pagination[pageSize]=3')
@@ -131,7 +133,7 @@ const onSearchChangedDebounced = useCallback(debounce(onSearchChanged, 800), [])
       </CommonContainer>
 
       <CommonContainer>
-        <CommonText>Yeni Eklenenler</CommonText>
+        <CommonText>{localeInUse.newly_added}</CommonText>
         {records?.map(
           (record) => {
             return <ListItem
