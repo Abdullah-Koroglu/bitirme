@@ -104,21 +104,32 @@ export default function App () {
 
   return (
     <NavigationContainer>
-      <Drawer.Navigator drawerContent={props => <CustomDrawer {...props}>{
+      <Drawer.Navigator
+        drawerContent={props => <CustomDrawer {...props}>{
           useEffect  (() => {
             setRoutes (props.state.routeNames)
           }, [props.state.routeNames])
-  }</CustomDrawer>} initialRouteName={localeInUse.homepage}>
-        <Drawer.Screen name={localeInUse.homepage} component={HomeScreen} />
-        <Drawer.Screen name={localeInUse.howto} component={HowtoStack} />
-        <Drawer.Screen name={localeInUse.virtual_tour} component={TourScreen} />
-        <Drawer.Screen name={localeInUse.events} component={EventStack} />
-        <Drawer.Screen name={localeInUse.email} component={MailScreen} />
-        <Drawer.Screen name={localeInUse.directory} component={DirectoryScreen} />
-        <Drawer.Screen name={localeInUse.report} component={ReportScreen} />
-        <Drawer.Screen name={localeInUse.transportation} component={TransportationScreen} />
-        <Drawer.Screen name={localeInUse.links} component={LinksScreen} />
+        }</CustomDrawer>} initialRouteName={localeInUse.homepage}>
+        <Drawer.Screen options={options} name={localeInUse.homepage} component={HomeScreen} />
+        <Drawer.Screen options={options} name={localeInUse.howto} component={HowtoStack} />
+        <Drawer.Screen options={options} name={localeInUse.virtual_tour} component={TourScreen} />
+        <Drawer.Screen options={options} name={localeInUse.events} component={EventStack} />
+        <Drawer.Screen options={options} name={localeInUse.email} component={MailScreen} />
+        <Drawer.Screen options={options} name={localeInUse.directory} component={DirectoryScreen} />
+        <Drawer.Screen options={options} name={localeInUse.report} component={ReportScreen} />
+        <Drawer.Screen options={options} name={localeInUse.transportation} component={TransportationScreen} />
+        <Drawer.Screen options={options} name={localeInUse.links} component={LinksScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
+}
+
+const options={
+  headerStyle: {
+    backgroundColor: '#1D8D84',
+  },
+  headerTintColor: '#fff',
+  headerTitleStyle: {
+    fontWeight: 'bold',
+  },
 }
