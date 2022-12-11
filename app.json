@@ -3,6 +3,7 @@
     "name": "bitirme",
     "slug": "bitirme",
     "version": "1.0.0",
+    "scheme": "com.coreoglu.bitirme",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -21,6 +22,8 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.coreoglu.bitirme",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

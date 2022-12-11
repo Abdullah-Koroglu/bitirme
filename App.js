@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { StateProvider } from './src/context/StateContext';
+import { ToastProvider } from 'react-native-toast-notifications'
 import Drawer from './src/drawer/index'
 import axios from 'axios';
 
@@ -10,9 +11,11 @@ axios.defaults.headers.common.Authorization = `Bearer baf31f4d5b4d33184f90d0b126
 
 export default function App () {
   return (
-    <StateProvider>
-        <Drawer />
-        <StatusBar style="auto" />
-    </StateProvider>
+    <ToastProvider>
+      <StateProvider>
+          <Drawer />
+          <StatusBar style="auto" />
+      </StateProvider>
+    </ToastProvider>
   );
 };

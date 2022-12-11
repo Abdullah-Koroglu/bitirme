@@ -5,6 +5,7 @@ import { Button, View, Text } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as Notifications from 'expo-notifications'
 
 import CustomDrawer from '../components/Drawer'
 import HomeScreen from '../pages/Home'
@@ -18,12 +19,34 @@ import DirectoryScreen from '../pages/Directory';
 import MailScreen from '../pages/Mail';
 import LinksScreen from '../pages/Links';
 import ReportScreen from '../pages/Report';
+import { useNotifications } from '../hooks/useNotifications';
 
 const Drawer = createDrawerNavigator ();
 const Stack = createNativeStackNavigator();
 
 export default function App () {
   const [,,,,setRoutes] = useContext (StateContext)
+  const { registerForPushNotificationsAsync, handleNotificationResponse } = useNotifications ()
+
+  useEffect  (() => {
+    registerForPushNotificationsAsync ()
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: true,
+      }),
+    });
+
+    const responseListener = Notifications.addNotificationResponseReceivedListener(handleNotificationResponse)
+
+    return () => {
+      if (responseListener) {
+        Notifications.removeNotificationSubscription(handleNotificationResponse)
+      }
+    }
+  }, [])
+
   const EventStack = () => {
     return <Stack.Navigator initialRouteName="Etkinlikler List" screenOptions={{headerShown: false}}>
       <Stack.Screen name="Etkinlikler Detay" component={EventDetailScreen} />
