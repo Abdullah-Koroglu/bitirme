@@ -115,7 +115,7 @@ const onSearchChangedDebounced = useCallback(debounce(onSearchChanged, 800), [])
     // }
     >
       <CommonContainer>
-        <SearchInput placeholder="Arama" onChangeText={onSearchChangedDebounced}/>
+        <SearchInput placeholder={localeInUse.search} onChangeText={onSearchChangedDebounced}/>
         {searchResult?.length > 0 && <SearchResult>
           {searchResult?.map(
             (record) => {

@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import { View, Text, Dimensions, Alert } from "react-native";
 import styled from 'styled-components/native';
 import { useToast } from "react-native-toast-notifications";
-
+import { StateContext } from "../context/StateContext";
+import locales from "../locale";
 
 export default function HomeScreen ({ navigation }) {
+  const [,,,,,,,locale] = useContext (StateContext)
   const toast = useToast();
 
   const [topic, setTopic] = useState ()
   const [desc, setDesc] = useState ()
+  const [localeInUse] = useState (locales[locale])
 
   const createRecord = async () => {
     try {
@@ -31,14 +34,14 @@ export default function HomeScreen ({ navigation }) {
     <View style={{ flex: 1}}>
       <Container style={{width: Dimensions.get("window").width}}>
         <Row>
-          <InputHeader>Konu</InputHeader>
+          <InputHeader>{localeInUse.topic}</InputHeader>
           <Input value={topic} onChangeText={e => setTopic (e)} maxLength={50} />
         </Row>
         <View style={{marginBottom: 20}}>
-          <InputHeader style={{marginBottom: 10}}>Açıklama</InputHeader>
+          <InputHeader style={{marginBottom: 10}}>{localeInUse.desc}</InputHeader>
           <Input value={desc} onChangeText={setDesc} multiline={true} numberOfLines={10}/>
         </View>
-        <Submit color="#1D8D84" title="Gönder" onPress={() => {createRecord ()}}></Submit>
+        <Submit color="#1D8D84" title={localeInUse.send} onPress={() => {createRecord ()}}></Submit>
       </Container>
     </View>
   );

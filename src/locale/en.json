@@ -1,4 +1,5 @@
 {
+  "locale": "English",
   "homepage": "Home page",
   "contact": "Contact",
   "howto":"How To",
@@ -9,5 +10,9 @@
   "report":"Suggestion and Complaint",
   "transportation":"Transportation",
   "links":"Links",
-  "newly_added": "Recently Added"
+  "newly_added": "Recently Added",
+  "search": "Search",
+  "topic": "Topic",
+  "desc": "Description",
+  "send": "Send"
 }

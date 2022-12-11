@@ -1,11 +1,15 @@
 import * as React from 'react';
-import {useEffect, useContext} from 'react';
+import {useEffect, useContext, useState} from 'react';
 import { StateContext } from "../context/StateContext";
 import { Button, View, Text, Platform } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Notifications from 'expo-notifications'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNotifications } from '../hooks/useNotifications';
+import { NativeModules } from 'react-native'
+import locales from '../locale'
 
 import CustomDrawer from '../components/Drawer'
 import HomeScreen from '../pages/Home'
@@ -19,15 +23,19 @@ import DirectoryScreen from '../pages/Directory';
 import MailScreen from '../pages/Mail';
 import LinksScreen from '../pages/Links';
 import ReportScreen from '../pages/Report';
-import { useNotifications } from '../hooks/useNotifications';
-import { NativeModules } from 'react-native'
-import { useState } from 'react';
-import locales from '../locale'
 
 const Drawer = createDrawerNavigator ();
 const Stack = createNativeStackNavigator();
 
-const handleLocale = (locale) => {
+const handleLocale = () => {
+  let locale = null /* await AsyncStorage.getItem('@locale') */;
+
+  if (locale) {
+    locale = Platform.OS === 'android' ?
+    NativeModules.I18nManager.localeIdentifier :
+    NativeModules.SettingsManager.settings.AppleLocale || NativeModules.SettingsManager.settings.AppleLanguages[0]
+  }
+
   if (locale === 'tr_TR' || locale === 'en_US') {
     return locale
   } else {
@@ -36,13 +44,28 @@ const handleLocale = (locale) => {
 }
 
 export default function App () {
-  const [,,,,setRoutes,,setLocale] = useContext (StateContext)
+  const [,,,,setRoutes,,setLocale,globalLocale] = useContext (StateContext)
   const { registerForPushNotificationsAsync, handleNotificationResponse } = useNotifications ()
   const locale = Platform.OS === 'android' ?
   NativeModules.I18nManager.localeIdentifier :
   NativeModules.SettingsManager.settings.AppleLocale || NativeModules.SettingsManager.settings.AppleLanguages[0]
 
-  const [localeInUse, setLocaleInUse] = useState (locales[handleLocale(locale)]) // handle the non-tr,en locales
+  const [localeInUse,setLocaleInUse] = useState (locales[handleLocale()]) // handle the non-tr,en locales
+  useEffect (() => {
+    if (globalLocale){
+      setLocale (globalLocale)
+      setLocaleInUse (locales[globalLocale])
+      getLocaleFromStorage ()
+    }
+  }, [globalLocale])
+
+  const getLocaleFromStorage = async () => {
+    let locale = await AsyncStorage.getItem ('@locale')
+    if (locale){
+      setLocale (locale)
+      setLocaleInUse (locales[locale])
+    }
+  }
 
   useEffect  (() => {
    setLocale (locale)
@@ -84,7 +107,7 @@ export default function App () {
       <Drawer.Navigator drawerContent={props => <CustomDrawer {...props}>{
           useEffect  (() => {
             setRoutes (props.state.routeNames)
-          }, [])
+          }, [props.state.routeNames])
   }</CustomDrawer>} initialRouteName={localeInUse.homepage}>
         <Drawer.Screen name={localeInUse.homepage} component={HomeScreen} />
         <Drawer.Screen name={localeInUse.howto} component={HowtoStack} />
