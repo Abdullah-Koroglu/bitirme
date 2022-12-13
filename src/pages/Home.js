@@ -20,9 +20,11 @@ export default function HomeScreen ({navigation}) {
   return (
     <View style={{paddingVertical: 10, display: 'flex', justifyContent: 'center', alignItems: "center"}}>
         <LocaleContainer>
-          {Object.keys(locales).map (l => <LocaleElement onPress={() => handleLocale (l)} key={l} style={{backgroundColor: l === locale && '#fff'}}>
-            <LocaleElementText style={{color: l === locale ? '#000' : '#fff'}}>{locales[l]?.locale}</LocaleElementText>
-          </LocaleElement>)}
+          {
+            Object.keys(locales).map (l => <LocaleElement onPress={() => handleLocale (l)} key={l} style={{backgroundColor: l === locale && '#fff'}}>
+              <LocaleElementText style={{color: l === locale ? '#000' : '#fff'}}>{locales[l]?.locale}</LocaleElementText>
+            </LocaleElement>)
+          }
         </LocaleContainer>
       <Container style={{flexDirection: 'row', display : "flex"}}>
         {routes?.map (route => <Element key={route} onPress={() => {navigation.navigate (route)}}><ElementText>{route}</ElementText></Element>)}

@@ -14,6 +14,7 @@ import locales from '../locale'
 import CustomDrawer from '../components/Drawer'
 import HomeScreen from '../pages/Home'
 import TourScreen from '../pages/Tour';
+import MapScreen from '../pages/Map';
 import EventsScreen from '../pages/events/list';
 import EventDetailScreen from '../pages/events/detail';
 import HowtoScreen from '../pages/howto/list';
@@ -113,6 +114,7 @@ export default function App () {
         <Drawer.Screen options={options} name={localeInUse.homepage} component={HomeScreen} />
         <Drawer.Screen options={options} name={localeInUse.howto} component={HowtoStack} />
         <Drawer.Screen options={options} name={localeInUse.virtual_tour} component={TourScreen} />
+        <Drawer.Screen options={options} name={localeInUse.map} component={MapScreen} />
         <Drawer.Screen options={options} name={localeInUse.events} component={EventStack} />
         <Drawer.Screen options={options} name={localeInUse.email} component={MailScreen} />
         <Drawer.Screen options={options} name={localeInUse.directory} component={DirectoryScreen} />
