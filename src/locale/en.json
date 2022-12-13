@@ -15,5 +15,8 @@
   "search": "Search",
   "topic": "Topic",
   "desc": "Description",
+  "call": "Call",
+  "send_mail": "Send Mail",
+  "how_to_contact": "How do you want to contact?",
   "send": "Send"
 }

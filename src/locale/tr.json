@@ -15,5 +15,8 @@
   "search": "Arama",
   "topic": "Konu",
   "desc": "Açıklama",
+  "call": "Ara",
+  "send_mail": "Mail Gönder",
+  "how_to_contact": "Nasıl iletişime geçmek istersiniz?",
   "send": "Gönder"
 }
