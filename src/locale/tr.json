@@ -14,9 +14,12 @@
   "newly_added": "Yeni eklenenler",
   "search": "Arama",
   "topic": "Konu",
+  "places": "Konumlar",
   "desc": "Açıklama",
   "call": "Ara",
   "send_mail": "Mail Gönder",
+  "no_record": "Kayıt Bulunamadı!",
+  "components": "Bileşenler",
   "how_to_contact": "Nasıl iletişime geçmek istersiniz?",
   "send": "Gönder"
 }

@@ -12,11 +12,14 @@
   "transportation":"Transportation",
   "links":"Links",
   "newly_added": "Recently Added",
+  "places": "Places",
   "search": "Search",
   "topic": "Topic",
   "desc": "Description",
   "call": "Call",
   "send_mail": "Send Mail",
+  "no_record": "No Record Found!",
+  "components": "Components",
   "how_to_contact": "How do you want to contact?",
   "send": "Send"
 }
