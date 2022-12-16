@@ -53,7 +53,6 @@ padding-bottom: 10px;
         aspectRatio: record?.attributes?.media?.data?.[0]?.attributes?.width / record?.attributes?.media?.data?.[0]?.attributes?.height}}
       source={{uri: process.env.REACT_APP_IMAGE_URL + record?.attributes?.media?.data?.[0]?.attributes?.url}}
       />}
-      {console.log (process.env.REACT_APP_IMAGE_URL+record?.attributes?.media?.data?.[0]?.attributes?.url)}
       <Markdown>
         {record?.attributes?.desc}
       </Markdown>

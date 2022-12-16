@@ -7,9 +7,10 @@ import 'moment/locale/tr'
 import Markdown from "react-native-markdown-renderer";
 import { StateContext } from "../context/StateContext";
 import { Ionicons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import locales from '../locale'
 
-export default function HowtosScreen({ navigation }) {
+export default function PlaceScreen({ navigation }) {
   const [,,,,,,,locale,setPlaceQueue,placeQueue] = useContext (StateContext)
   const [localeInUse, setLocaleInUse] = useState(locales[locale])
   const [record, setRecord] = useState(null)
@@ -17,7 +18,6 @@ export default function HowtosScreen({ navigation }) {
 
   const getRecord = async () => {
     try {
-      console.log (placeQueue[placeQueue.length -1])
       const placeId = placeQueue[placeQueue.length -1]
       const response = await axios.get(`/places/${placeId}?populate=*`)
       const childrenResponse = await axios.get(`/places?filters[parent][id][$eq]=${placeId}`)
@@ -28,12 +28,24 @@ export default function HowtosScreen({ navigation }) {
     }
   }
 
+  useEffect (_ => {
+    navigation.getParent ().setOptions ({
+      headerRight: () => (
+        <HeaderButtonContainer onPress={() => handleNavigate ()}><Feather name="map" size={24} color="white" /></HeaderButtonContainer>
+      ),
+    })
+  }, [navigation, record])
+
   useEffect(
     () => {
       getRecord()
     },
     []
   )
+
+const HeaderButtonContainer = styled.TouchableOpacity`
+margin-right: 20px;
+`
 
 const Container = styled.ScrollView`
   flex: 1;
@@ -63,6 +75,25 @@ padding-bottom: 5px;
 const BackContainer = styled.TouchableOpacity`
 padding-right: 10px;
 `
+
+const handleNavigate = () => {
+  if (record) {
+    let location = record.attributes.location?.split (',');
+    location = location.map (i => i.trim ())
+    navigation.navigate (localeInUse.map,
+      {
+        location: {
+          'latitude': parseFloat(location[0]),
+          'longitude': parseFloat(location[1])
+        },
+        title: record.attributes.name,
+        media: record.attributes.media.data[0]?.attributes?.url
+      }
+      )
+  } else {
+    console.log ('error')
+  }
+}
 
   return (
     <Container>
