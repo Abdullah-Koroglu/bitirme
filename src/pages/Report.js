@@ -7,7 +7,7 @@ import { StateContext } from "../context/StateContext";
 import locales from "../locale";
 
 export default function HomeScreen ({ navigation }) {
-  const [,,,,,,,locale] = useContext (StateContext)
+  const {locale} = useContext (StateContext)
   const toast = useToast();
 
   const [topic, setTopic] = useState ()

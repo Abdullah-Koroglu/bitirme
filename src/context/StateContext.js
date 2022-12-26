@@ -10,7 +10,21 @@ export const StateProvider = ({children}) => {
   const [locale, setLocale] = useState ();
 
   return (
-    <StateContext.Provider value={[setEventId, eventId, setHowtoId, howtoId, setRoutes, routes, setLocale, locale, setPlaceQueue, placeQueue]}>
+    <StateContext.Provider
+      value={
+        {setEventId,
+        eventId,
+        setHowtoId,
+        howtoId,
+        setRoutes,
+        routes,
+        setLocale,
+        locale,
+        setPlaceQueue,
+        placeQueue
+        }
+      }
+    >
       {children}
     </StateContext.Provider>
   )

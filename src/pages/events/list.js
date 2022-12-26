@@ -10,7 +10,8 @@ import locales from '../../locale'
 
 export default function EventsScreen({ navigation }) {
   const [records, setRecords] = useState(null)
-  const [setEventId,,,,,,,locale] = useContext (StateContext)
+  const {locale} = useContext (StateContext)
+  console.log (locale)
   const [searchResult, setSearchResult] = useState(null)
   const [localeInUse, setLocaleInUse] = useState(locales[locale])
 

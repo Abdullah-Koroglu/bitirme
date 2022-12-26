@@ -7,7 +7,7 @@ import styled from 'styled-components/native';
 import locales from "../locale";
 
 export default function HomeScreen ({navigation}) {
-  const [,,,,,routes,setLocale,locale] = useContext (StateContext)
+  const {routes,setLocale,locale} = useContext (StateContext)
 
   const handleLocale = async (locale) => {
     await AsyncStorage.setItem(

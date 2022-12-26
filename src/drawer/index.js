@@ -47,7 +47,7 @@ const handleLocale = () => {
 }
 
 export default function App () {
-  const [,,,,setRoutes,,setLocale,globalLocale] = useContext (StateContext)
+  const {setRoutes,setLocale,globalLocale} = useContext (StateContext)
   const { registerForPushNotificationsAsync, handleNotificationResponse } = useNotifications ()
   const locale = Platform.OS === 'android' ?
   NativeModules.I18nManager.localeIdentifier :

@@ -12,7 +12,7 @@ export default function HowtosScreen({ navigation }) {
   const [records, setRecords] = useState(null)
   const [searchText, setSearchText] = useState(null)
   const [searchResult, setSearchResult] = useState(null)
-  const [,,setHowtoId,,,,,locale] = useContext (StateContext)
+  const {locale} = useContext (StateContext)
   const [localeInUse, setLocaleInUse] = useState(locales[locale])
   const getRecords = async () => {
     try {

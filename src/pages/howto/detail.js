@@ -11,7 +11,7 @@ import locales from '../../locale'
 
 
 export default function HowtosScreen({ navigation }) {
-  const [,,,howtoId,,,,locale] = useContext (StateContext)
+  const {howtoId,locale} = useContext (StateContext)
   const [localeInUse, setLocaleInUse] = useState(locales[locale])
   const [record, setRecord] = useState(null)
 

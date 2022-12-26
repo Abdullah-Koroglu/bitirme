@@ -11,7 +11,7 @@ import { Feather } from '@expo/vector-icons';
 import locales from '../locale'
 
 export default function PlaceScreen({ navigation }) {
-  const [,,,,,,,locale,setPlaceQueue,placeQueue] = useContext (StateContext)
+  const {locale,setPlaceQueue,placeQueue} = useContext (StateContext)
   const [localeInUse, setLocaleInUse] = useState(locales[locale])
   const [record, setRecord] = useState(null)
   const [children, setChildren] = useState(null)
