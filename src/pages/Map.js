@@ -33,9 +33,9 @@ border: 2px solid black;
           title={marker.title}
           stopPropagation={true}
           >
-            <ImageContainer>
+            {marker.media && <ImageContainer>
               <Image source={{uri: process.env.REACT_APP_IMAGE_URL + marker.media}} style={{height: 60, width:60 }} />
-            </ImageContainer>
+            </ImageContainer>}
           </Marker>
         }
       </MapView>}
