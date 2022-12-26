@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Dimensions, Image } from "react-native";
+import { Alert, Linking, Text, TouchableOpacity, Dimensions, Image } from "react-native";
 import axios from "axios";
 import styled from 'styled-components/native';
 import moment from "moment";
@@ -95,6 +95,27 @@ const handleNavigate = () => {
   }
 }
 
+const handleCall = (record) => {
+  Alert.alert(
+    localeInUse.how_to_contact,'',
+    [
+      record.phone && {
+        text: localeInUse.call,
+        onPress: () => Linking.openURL (`tel:${record.phone}`),
+        style: "cancel",
+      },
+      record.email && {
+        text: localeInUse.send_mail,
+        onPress: () => Linking.openURL (`mailto:${record.email}`)
+      },
+    ],
+    {
+      cancelable: true,
+      userInterfaceStyle: 'dark'
+    }
+  );
+}
+
   return (
     <Container>
       <ListItemHeader>
@@ -121,6 +142,12 @@ const handleNavigate = () => {
             {localeInUse.components}
           </ListItemHeader>
           {children?.map (child => <TouchableOpacity onPress={() => {setPlaceQueue ([...placeQueue, child.id])}}><ChildrenElementText>● {child.attributes.name}</ChildrenElementText></TouchableOpacity>)}
+        </ChildrenContainer>
+      }
+      {
+        record?.attributes?.contact &&
+        <ChildrenContainer>
+          <TouchableOpacity onPress={() => {handleCall (record.attributes.contact.data.attributes)}}><ChildrenElementText>● {record.attributes.contact.data.attributes.name}</ChildrenElementText></TouchableOpacity>
         </ChildrenContainer>
       }
     </Container>
