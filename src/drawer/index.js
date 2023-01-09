@@ -47,20 +47,20 @@ const handleLocale = () => {
 }
 
 export default function App () {
-  const {setRoutes,setLocale,globalLocale} = useContext (StateContext)
+  const {setRoutes,setLocale,locale} = useContext (StateContext)
   const { registerForPushNotificationsAsync, handleNotificationResponse } = useNotifications ()
-  const locale = Platform.OS === 'android' ?
+  const OSLocale = Platform.OS === 'android' ?
   NativeModules.I18nManager.localeIdentifier :
   NativeModules.SettingsManager.settings.AppleLocale || NativeModules.SettingsManager.settings.AppleLanguages[0]
 
   const [localeInUse,setLocaleInUse] = useState (locales[handleLocale()]) // handle the non-tr,en locales
   useEffect (() => {
-    if (globalLocale){
-      setLocale (globalLocale)
-      setLocaleInUse (locales[globalLocale])
+    if (locale){
+      setLocale (locale)
+      setLocaleInUse (locales[locale])
       getLocaleFromStorage ()
     }
-  }, [globalLocale])
+  }, [locale])
 
   const getLocaleFromStorage = async () => {
     let locale = await AsyncStorage.getItem ('@locale')
@@ -71,7 +71,7 @@ export default function App () {
   }
 
   useEffect  (() => {
-   setLocale (locale)
+   setLocale (OSLocale)
 
     registerForPushNotificationsAsync ()
     Notifications.setNotificationHandler({

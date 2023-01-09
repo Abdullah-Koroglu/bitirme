@@ -39,7 +39,7 @@ export default function HomeScreen ({ navigation }) {
         </Row>
         <View style={{marginBottom: 20}}>
           <InputHeader style={{marginBottom: 10}}>{localeInUse.desc}</InputHeader>
-          <Input value={desc} onChangeText={setDesc} multiline={true} numberOfLines={10}/>
+          <Input style={{textAlignVertical: 'top'}} value={desc} onChangeText={setDesc} multiline={true} numberOfLines={10}/>
         </View>
         <Submit color="#1D8D84" title={localeInUse.send} onPress={() => {createRecord ()}}></Submit>
       </Container>
@@ -63,7 +63,7 @@ margin-bottom: 20px;
 const InputHeader = styled.Text`
 margin-right: 10px;
 font-weight: 600;
-font-size: 19;
+font-size: 19px;
 `
 
 const Input = styled.TextInput`
@@ -71,7 +71,7 @@ background-color: white;
 border: 1px solid #cdcdcd;
 flex: 1;
 border-radius: 5px;
-padding: 2px 10px;
+padding: 5px 10px;
 `
 
 const Submit = styled.Button`

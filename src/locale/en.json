@@ -20,6 +20,8 @@
   "send_mail": "Send Mail",
   "no_record": "No Record Found!",
   "components": "Components",
+  "edit": "Edit",
+  "save": "Save",
   "how_to_contact": "How do you want to contact?",
   "send": "Send"
 }
