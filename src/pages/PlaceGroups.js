@@ -6,13 +6,14 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { StateContext } from "../context/StateContext";
 import locales from '../locale'
+import { debounce } from "lodash";
 
-export default function HowtosScreen({ navigation, route }) {
+export default function PlaceGroupScreen({ navigation, route }) {
   const [records, setRecords] = useState(null)
   const [recordsType, setRecordsType] = useState(null)
+  const {locale,setPlaceQueue} = useContext (StateContext)
   const [searchResult, setSearchResult] = useState(null)
-  const {setHowtoId,locale,setPlaceQueue} = useContext (StateContext)
-  const [localeInUse, setLocaleInUse] = useState(locales[locale])
+  const [localeInUse] = useState(locales[locale])
   const getRecords = async (groupId) => {
     try {
       const requestLink = groupId ? `/places?filters[placeGroup][id][$eq]=${groupId}` : '/place-groups'
@@ -71,8 +72,25 @@ text-overflow: ellipsis;
 width: 5px;
 `
 
-const handleNavigation = (record) => {
-  if (recordsType === 'place-groups') {
+const CommonContainer = styled.View`
+padding: 10px;
+background-color: #c5c5c5;
+border-radius: 10px;
+margin-bottom: 10px;
+`
+
+const SearchInput = styled.TextInput`
+background-color: white;
+border-radius: 3px;
+padding: 4px 10px;
+`
+const SearchResult = styled.View`
+margin-top: 10px;
+`
+
+
+const handleNavigation = (record, force) => {
+  if (recordsType === 'place-groups' && !force) {
     getRecords (record?.id)
   }else {
     navigation.navigate ('Place Detay')
@@ -81,8 +99,39 @@ const handleNavigation = (record) => {
 }
 
 
+const onSearchChanged = async(param) => {
+  try {
+    const response = await axios.get(`/places?filters[name][$containsi]=${param}&populate=*`)/*  */
+    response.data?.data && setSearchResult (response.data.data)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const onSearchChangedDebounced = useCallback(debounce(onSearchChanged, 800), []);
+
   return (
     <Container>
+      <CommonContainer>
+        <SearchInput placeholder={localeInUse.search} onChangeText={onSearchChangedDebounced}/>
+        {searchResult?.length > 0 && <SearchResult>
+          {searchResult?.map(
+            (record) => {
+              return <ListItem
+              key={record?.id}
+              onPress={() => {handleNavigation (record, true)}}
+              >
+                <ListItemRow>
+                  <ListItemHeader>{record?.attributes.name}</ListItemHeader>
+                </ListItemRow>
+              </ListItem>
+            }
+          )}
+        </SearchResult>}
+      </CommonContainer>
+
+
+
         {recordsType === 'places' &&
           <BackContainer onPress={() => {setRecords (null); setRecordsType (null); getRecords ()}}>
             <Ionicons name="arrow-back" size={24} color="black" />

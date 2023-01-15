@@ -10,7 +10,6 @@ import { StateContext } from "../../context/StateContext";
 
 export default function EventsScreen({ route, navigation }) {
   const {eventId} = route.params
-  console.log (eventId)
   const [record, setRecord] = useState(null)
 
   const getRecord = async () => {

@@ -20,7 +20,7 @@ border: 2px solid black;
 `
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      {marker && <MapView style={{width:'100%', height:'100%'}}
+      {marker ? <MapView style={{width:'100%', height:'100%'}}
       initialRegion={{
         'latitude': 40.22668128520942,
         'longitude': 28.876643045484236,
@@ -38,7 +38,7 @@ border: 2px solid black;
             </ImageContainer>}
           </Marker>
         }
-      </MapView>}
+      </MapView> : <Text>Lütfen Konum Seçiniz!</Text>}
     </View>
   );
 }

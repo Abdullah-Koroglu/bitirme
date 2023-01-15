@@ -122,14 +122,14 @@ export default function App () {
         }</CustomDrawer>} initialRouteName={localeInUse.homepage}>
         <Drawer.Screen options={options} name={localeInUse.homepage} component={HomeScreen} />
         <Drawer.Screen options={options} name={localeInUse.howto} component={HowtoStack} />
-        <Drawer.Screen options={options} name={localeInUse.virtual_tour} component={TourScreen} />
+        {/* <Drawer.Screen options={options} name={localeInUse.virtual_tour} component={TourScreen} /> */}
         <Drawer.Screen options={options} name={localeInUse.places} component={PlaceStack} />
         <Drawer.Screen options={options} name={localeInUse.map} component={MapScreen} />
         <Drawer.Screen options={options} name={localeInUse.events} component={EventStack} />
         <Drawer.Screen options={options} name={localeInUse.email} component={MailScreen} />
         <Drawer.Screen options={options} name={localeInUse.directory} component={DirectoryScreen} />
         <Drawer.Screen options={options} name={localeInUse.report} component={ReportScreen} />
-        <Drawer.Screen options={options} name={localeInUse.transportation} component={TransportationScreen} />
+        {/* <Drawer.Screen options={options} name={localeInUse.transportation} component={TransportationScreen} /> */}
         <Drawer.Screen options={options} name={localeInUse.links} component={LinksScreen} />
       </Drawer.Navigator>
     </NavigationContainer>

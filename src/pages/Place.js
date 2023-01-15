@@ -87,7 +87,7 @@ const handleNavigate = () => {
           'longitude': parseFloat(location[1])
         },
         title: record.attributes.name,
-        media: record.attributes.media.data[0]?.attributes?.url
+        media: record.attributes?.media?.data?.[0]?.attributes?.url
       }
       )
   } else {
@@ -126,7 +126,7 @@ const handleCall = (record) => {
         }
         {record?.attributes?.name}
       </ListItemHeader>
-      {record?.attributes && <Image
+      {record?.attributes?.media?.data && <Image
         style={{
           width: Dimensions.get("window").width * 0.9,
           aspectRatio: record?.attributes?.media?.data?.[0]?.attributes?.width / record?.attributes?.media?.data?.[0]?.attributes?.height}}
@@ -145,9 +145,12 @@ const handleCall = (record) => {
         </ChildrenContainer>
       }
       {
-        record?.attributes?.contact &&
+        record?.attributes?.contact?.data &&
         <ChildrenContainer>
-          <TouchableOpacity onPress={() => {handleCall (record.attributes.contact.data.attributes)}}><ChildrenElementText>● {record.attributes.contact.data.attributes.name}</ChildrenElementText></TouchableOpacity>
+          <ListItemHeader>
+            {localeInUse.contact}
+          </ListItemHeader>
+          <TouchableOpacity onPress={() => {handleCall (record.attributes.contact.data.attributes)}}><ChildrenElementText>● {record.attributes.contact?.data?.attributes?.name}</ChildrenElementText></TouchableOpacity>
         </ChildrenContainer>
       }
     </Container>
