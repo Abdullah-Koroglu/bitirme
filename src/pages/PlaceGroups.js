@@ -98,7 +98,6 @@ const handleNavigation = (record, force) => {
   }
 }
 
-
 const onSearchChanged = async(param) => {
   try {
     const response = await axios.get(`/places?filters[name][$containsi]=${param}&populate=*`)/*  */

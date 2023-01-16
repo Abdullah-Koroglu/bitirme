@@ -3,13 +3,14 @@ import { Alert, Linking, RefreshControl } from "react-native";
 import axios from "axios";
 import styled from 'styled-components/native';
 import { StateContext } from "../context/StateContext";
+import { debounce } from "lodash";
 import locales from '../locale'
 
-export default function HowtosScreen({ navigation }) {
+export default function DirectoryScreen({ navigation }) {
   const [records, setRecords] = useState(null)
   const [searchText, setSearchText] = useState(null)
   const [searchResult, setSearchResult] = useState(null)
-  const {setHowtoId,locale} = useContext (StateContext)
+  const {locale} = useContext (StateContext)
   const [localeInUse, setLocaleInUse] = useState(locales[locale])
   const getRecords = async () => {
     try {
@@ -59,6 +60,32 @@ text-overflow: ellipsis;
 width: 5px;
 `
 
+const CommonContainer = styled.View`
+padding: 10px;
+background-color: #c5c5c5;
+border-radius: 10px;
+margin-bottom: 10px;
+`
+
+const SearchInput = styled.TextInput`
+background-color: white;
+border-radius: 3px;
+padding: 4px 10px;
+`
+const SearchResult = styled.View`
+margin-top: 10px;
+`
+
+const onSearchChanged = async(param) => {
+  try {
+    const response = await axios.get(`/contacts?filters[name][$containsi]=${param}&populate=*`)/*  */
+    response.data?.data && setSearchResult (response.data.data)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const onSearchChangedDebounced = useCallback(debounce(onSearchChanged, 800), []);
 
 const [refreshing, setRefreshing] = useState(false);
 
@@ -98,6 +125,24 @@ const handleCall = (record) => {
       />
     }
     >
+      <CommonContainer>
+        <SearchInput placeholder={localeInUse.search} onChangeText={onSearchChangedDebounced}/>
+        {searchResult?.length > 0 && <SearchResult>
+          {searchResult?.map(
+            (record) => {
+              return <ListItem
+              key={record?.id}
+              onPress={() => {handleCall (record?.attributes)}}
+              >
+                <ListItemRow>
+                  <ListItemHeader>{record?.attributes.name}</ListItemHeader>
+                </ListItemRow>
+              </ListItem>
+            }
+          )}
+        </SearchResult>}
+      </CommonContainer>
+
         {records?.map(
           (record) => {
             return <ListItem

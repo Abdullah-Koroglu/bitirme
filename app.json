@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "bitirme",
-    "slug": "bitirme",
+    "name": "Bursa Uludağ Üniversitesi",
+    "slug": "bursauludaguniversitesi",
     "version": "1.0.0",
-    "scheme": "com.coreoglu.bitirme",
+    "scheme": "com.coreoglu.uludag",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -22,15 +22,21 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.coreoglu.bitirme",
+      "versionCode": 1,
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.coreoglu.bitirme"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f766a82c-ec12-4f54-981c-2130451ba5c9"
+      }
     }
   }
 }

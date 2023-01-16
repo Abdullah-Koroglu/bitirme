@@ -2,7 +2,6 @@ import { useContext, useEffect, useState, useCallback } from "react";
 import { View, Text, TouchableOpacity, RefreshControl } from "react-native";
 import axios from "axios";
 import styled from 'styled-components/native';
-import moment from "moment";
 import { StateContext } from "../../context/StateContext";
 import 'moment/locale/tr'
 import { debounce } from "lodash";

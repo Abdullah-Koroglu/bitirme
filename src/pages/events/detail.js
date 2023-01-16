@@ -6,15 +6,16 @@ import moment from "moment";
 import 'moment/locale/tr'
 import Markdown from "react-native-markdown-renderer";
 import { StateContext } from "../../context/StateContext";
-
+import { Feather } from '@expo/vector-icons';
 
 export default function EventsScreen({ route, navigation }) {
   const {eventId} = route.params
   const [record, setRecord] = useState(null)
+  const {setPlaceQueue} = useContext (StateContext)
 
   const getRecord = async () => {
     try {
-      const response = await axios.get(`/events/${eventId}`)
+      const response = await axios.get(`/events/${eventId}?populate=*`)
       response.data?.data && setRecord(response.data.data)
     } catch (error) {
       console.error(error)
@@ -49,9 +50,18 @@ padding-bottom: 10px;
       <ListItemHeader>
         {record?.attributes?.name}
       </ListItemHeader>
+      <ListItemHeader style={{fontSize: 20}}>
+        {moment (new Date(record?.attributes?.date)).format ('DD.MM.YYYY')}
+      </ListItemHeader>
       <Markdown>
         {record?.attributes?.desc}
       </Markdown>
+      {record?.attributes?.place?.data?.attributes &&
+        <View style={{display: 'flex', flexDirection: "row"}}>
+          <Feather name="map" size={24} color="black" />
+          <Text style={{fontSize: 20, marginStart: 10}}>{record?.attributes?.place?.data?.attributes?.name}</Text>
+        </View>
+      }
     </Container>
   );
 }
